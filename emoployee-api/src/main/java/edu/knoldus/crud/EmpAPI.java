@@ -6,6 +6,9 @@ import com.lightbend.lagom.javadsl.api.Service;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
 import edu.knoldus.crud.utiliy.Employee;
 
+import java.util.List;
+import java.util.Map;
+
 import static com.lightbend.lagom.javadsl.api.Service.named;
 import static com.lightbend.lagom.javadsl.api.Service.restCall;
 import static com.lightbend.lagom.javadsl.api.transport.Method.DELETE;
@@ -16,6 +19,7 @@ import static com.lightbend.lagom.javadsl.api.transport.Method.PUT;
 
 public interface EmpAPI extends Service {
     ServiceCall<NotUsed, Employee> getEmp(String id);
+    ServiceCall<NotUsed,Map<Integer,Employee>> getAllEmp();
     ServiceCall<NotUsed,String> deleteEmp(String id);
     ServiceCall<Employee, String> postEmp();
     ServiceCall<Employee,String> updateEmp(String id);
@@ -25,7 +29,8 @@ public interface EmpAPI extends Service {
                 restCall(GET, "/get/:id", this::getEmp),
                 restCall(POST, "/post", this::postEmp),
                 restCall(DELETE,"/delete/:id",this::deleteEmp),
-                restCall(PUT,"/put/:id",this::updateEmp)
+                restCall(PUT,"/put/:id",this::updateEmp),
+                restCall(GET,"/getallemployees",this::getAllEmp)
         ).withAutoAcl(true);
     }
 

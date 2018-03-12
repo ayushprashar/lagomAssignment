@@ -3,6 +3,8 @@ package edu.knoldus.crud;
 import akka.NotUsed;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
 import edu.knoldus.crud.utiliy.Employee;
+
+import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -22,6 +24,12 @@ public class EmpImpl implements EmpAPI {
                     Optional.of(empDB.get(Integer.parseInt(id))).orElseThrow(RuntimeException::new)
             );
     }
+
+    @Override
+    public ServiceCall<NotUsed, Map<Integer, Employee>> getAllEmp() {
+        return request -> CompletableFuture.completedFuture(empDB);
+    }
+
 
     @Override
     public ServiceCall<NotUsed, String> deleteEmp(String id) {
